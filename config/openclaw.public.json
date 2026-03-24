@@ -1,12 +1,12 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.23-2",
-    "lastTouchedAt": "2026-03-24T16:40:38.666Z"
+    "lastTouchedAt": "2026-03-24T18:45:19.100Z"
   },
   "wizard": {
-    "lastRunAt": "2026-03-24T16:17:17.582Z",
+    "lastRunAt": "2026-03-24T18:45:18.982Z",
     "lastRunVersion": "2026.3.23-2",
-    "lastRunCommand": "onboard",
+    "lastRunCommand": "configure",
     "lastRunMode": "local"
   },
   "auth": {
@@ -14,6 +14,82 @@
       "openai:default": {
         "provider": "openai",
         "mode": "api_key"
+      }
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "lmstudio": {
+        "baseUrl": "http://192.168.50.176:1234/v1",
+        "apiKey": "<redacted>",
+        "api": "openai-responses",
+        "models": [
+          {
+            "id": "qwen/qwen3-coder-30b",
+            "name": "Qwen3 Coder 30B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen/qwen3-32b",
+            "name": "Qwen3 32B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "deepseek-r1-distill-qwen-32b",
+            "name": "DeepSeek R1 Distill Qwen 32B",
+            "reasoning": true,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "meta/llama-3.3-70b",
+            "name": "Llama 3.3 70B",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
       }
     }
   },
@@ -25,6 +101,18 @@
       "models": {
         "openai/gpt-5.4": {
           "alias": "GPT"
+        },
+        "lmstudio/qwen/qwen3-coder-30b": {
+          "alias": "LOCAL-CODER"
+        },
+        "lmstudio/qwen/qwen3-32b": {
+          "alias": "LOCAL-GENERAL"
+        },
+        "lmstudio/deepseek-r1-distill-qwen-32b": {
+          "alias": "LOCAL-REASON"
+        },
+        "lmstudio/meta/llama-3.3-70b": {
+          "alias": "LOCAL-LLAMA"
         }
       },
       "workspace": "/home/phybyte-claw/.openclaw/workspace"
@@ -68,6 +156,15 @@
       "botToken": "<redacted>",
       "groupPolicy": "disabled",
       "streaming": "partial"
+    },
+    "discord": {
+      "enabled": true,
+      "token": "<redacted>",
+      "groupPolicy": "allowlist",
+      "guilds": {
+        "*": {}
+      },
+      "streaming": "off"
     }
   },
   "gateway": {
