@@ -66,12 +66,7 @@
       "enabled": true,
       "dmPolicy": "pairing",
       "botToken": "<redacted>",
-      "groups": {
-        "*": {
-          "requireMention": true
-        }
-      },
-      "groupPolicy": "allowlist",
+      "groupPolicy": "disabled",
       "streaming": "partial"
     }
   },
