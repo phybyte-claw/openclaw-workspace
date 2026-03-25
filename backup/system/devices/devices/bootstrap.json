@@ -1,0 +1,13 @@
+{
+  "ddkqAuBU9ExSz2Wd4TPYtg41bKUHaCuN67l0ZFBImpQ": {
+    "token": "[SECRET_TOKEN]",
+    "ts": 1774371785902,
+    "profile": {
+      "roles": [
+        "node"
+      ],
+      "scopes": []
+    },
+    "issuedAtMs": 1774371785902
+  }
+}
