@@ -1,32 +1,10 @@
 import json
-import os
 import asyncio
-import subprocess
-import discord
-
-# Load credentials and routing
-CREDENTIALs_PATH = '/home/ubuntu/.openclaw/credentials/discord.json'
-ROUTING_PATH = '/home/ubuntu/.openclaw/credentials/discord_routing.json'
-
-def load_config(path):
-    with open(path, 'r') as f:
-        return json.load(f)
-
-try:
-    discord_config = load_config(CRED_PATH := CREDs_PATH if 'CREDS_PATH' in locals() else CRED_PATH) # dummy for structure
-    # Let's just rewrite the whole file properly to avoid all the mess.
-except:
-    pass
-
-# Re-doing everything cleanly in one go.
-import json
-import os
-import asyncio
-import subprocess
 import discord
 
 CREDENTIALS_PATH = '/home/ubuntu/.openclaw/credentials/discord.json'
 ROUTING_PATH = '/home/ubuntu/.openclaw/credentials/discord_routing.json'
+OPENCLAW_BIN = '/home/ubuntu/.nvm/versions/node/v24.14.1/bin/openclaw'
 
 def load_config(path):
     with open(path, 'r') as f:
@@ -40,7 +18,7 @@ except Exception as e:
     exit(1)
 
 TOKEN = discord_config['discord_bot_token']
-REVERSE_MAP = {int(k) if k.isdigit() else k: v for k, v in routing_config['discord_routing'].items()}
+REVERSE_MAP = {int(k): v for k, v in routing_config['discord_routing'].items() if k.isdigit()}
 
 class ClawDiscordListener(discord.Client):
     async def on_ready(self):
@@ -54,42 +32,40 @@ class ClawDiscordListener(discord.Client):
         if message.author == self.user:
             return
 
-        try:
-            cid = int(message.channel.id)
-        except ValueError:
-            return
-
+        cid = message.channel.id
         if cid not in REVERSE_MAP:
             return
-        
+
         routing_data = REVERSE_MAP[cid]
         print(f"📩 Incoming [{routing_data['name']}]: '{message.content}'")
 
-        task_payload = f"Context: {message.content}. Instructions: {routing_data['instructions']}"
-        # Use the correct agent command found in help
+        task_payload = f"{routing_data['instructions']}\n\nUser message: {message.content}"
         cmd = [
-            "openclaw", "agent", 
-            "--to", str(message.channel.id), # Note: We'll need a real recipient, using channel ID as placeholder or finding user
+            OPENCLAW_BIN, "agent",
+            "--agent", routing_data['agent_profile'],
             "--message", task_payload,
-            "--model", routing_data['model'],
-            "--deliver",
-            "--channel", "discord"
         ]
-        
+
         try:
-            proc = await asyncio.create_subprocess_exec(*cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+            proc = await asyncio.create_subprocess_exec(
+                *cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
             stdout, stderr = await proc.communicate()
             if stdout:
                 res = stdout.decode().strip()
                 await message.channel.send(f"**{routing_data['name'].upper()}**: {res}")
-            if stderr and not stdout:
-                await message.channel.send(f"⚠️ **Error:** `{stderr.decode().strip()[:100]}`")
+            elif stderr:
+                err = stderr.decode().strip()
+                print(f"⚠️ Agent stderr [{routing_data['name']}]: {err}")
+                await message.channel.send(f"⚠️ **Error:** `{err[:200]}`")
         except Exception as e:
             await message.channel.send(f"❌ **Dispatcher Error:** {str(e)}")
 
 async def main():
     intents = discord.Intents.default()
-    intents.message_content = True 
+    intents.message_content = True
     client = ClawDiscordListener(intents=intents)
     await client.start(TOKEN)
 

@@ -1,0 +1,4 @@
+credentials/
+*.log
+venv_discord/
+.openclaw/
