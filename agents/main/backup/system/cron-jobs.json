@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "957d0b65-286b-4b7a-b0b7-6d1b60f34a67",
+      "name": "daily-openclaw-maintenance",
+      "description": "Daily 04:00 OpenClaw update + gateway restart + Discord monitoring report",
+      "enabled": true,
+      "createdAtMs": 1774378858844,
+      "updatedAtMs": 1774382359147,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 4 * * *",
+        "tz": "Europe/Berlin"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run /home/phybyte-claw/.openclaw/workspace/.openclaw/scripts/daily-openclaw-maintenance.sh with bash. Do not skip failures. Let the script send the Discord report itself, then reply with a one-line completion summary.",
+        "model": "GPT",
+        "thinking": "minimal",
+        "timeoutSeconds": 2400
+      },
+      "delivery": {
+        "mode": "none",
+        "channel": "last"
+      },
+      "state": {
+        "nextRunAtMs": 1774494000000,
+        "lastRunAtMs": 1774382196781,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 162366,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0
+      }
+    }
+  ]
+}
