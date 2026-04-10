@@ -9,3 +9,5 @@ backup/system/identity/
 backup/system/workspace/
 agents/*/.openclaw/
 agents/*/sessions/
+
+space-combat-sim/.git/
