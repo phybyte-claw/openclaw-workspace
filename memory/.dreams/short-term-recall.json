@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-13T12:01:42.355Z",
+  "entries": {
+    "memory:memory/2026-04-05.md:1:20": {
+      "key": "memory:memory/2026-04-05.md:1:20",
+      "path": "memory/2026-04-05.md",
+      "startLine": 1,
+      "endLine": 20,
+      "source": "memory",
+      "snippet": "# 2026-04-05 ## Discord Integration Debug & Fix - `discord_listener.py` was broken: wrong CLI flags (`--to`, `--model`, `--channel`), `openclaw` not in PATH, and `engineer`/`scout` agents didn't exist yet. - Fixed `discord_listener.py` to use correct `openclaw agent --agent <profile> --message <text>` syntax with full binary path. - Created `scout` and `engineer` agents with separate workspaces (`workspace-scout/`, `workspace-engineer/`). - **Critical finding:** Gemma-4-26b and Qwen3.5-9b behave as pure reasoning models on this LMStudio setup — output goes only to `reasoning_content`, `content` is empty. OpenClaw gateway can't parse the response and times out. - Switched all agents to `qwe",
+      "recallCount": 1,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 0.5687040125066867,
+      "maxScore": 0.5687040125066867,
+      "firstRecalledAt": "2026-04-13T12:01:42.355Z",
+      "lastRecalledAt": "2026-04-13T12:01:42.355Z",
+      "queryHashes": [
+        "37787d6fbca6"
+      ],
+      "recallDays": [
+        "2026-04-13"
+      ],
+      "conceptTags": [
+        "gateway",
+        "discord-listener.py",
+        "workspace-scout",
+        "workspace-engineer",
+        "gemma-4-26b",
+        "qwen3.5-9b",
+        "reasoning-content",
+        "discord"
+      ]
+    }
+  }
+}
